@@ -2,16 +2,17 @@ package tests
 
 import (
 	"app/internal/server"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/gin-gonic/gin"
 )
 
 func TestHelloWorldHandler(t *testing.T) {
 	s := &server.Server{}
 	r := gin.New()
-	r.GET("/", s.HelloWorldHandler)
+	r.GET("/", s.GetHelloWorld)
 	// Create a test HTTP request
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
