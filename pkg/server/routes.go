@@ -1,9 +1,8 @@
 package server
 
 import (
+	routes "app/internal/controllers"
 	"net/http"
-
-	v1 "app/pkg/router/v1"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +10,10 @@ import (
 func (s *Server) Routes() http.Handler {
 	r := gin.Default()
 
-	v1.Routes(r.Group("/api/v1"))
-
+	v1 := r.Group("/api/v1")
+	{
+		routes.ProductController(v1)
+		routes.AuthController(v1)
+	}
 	return r
 }
