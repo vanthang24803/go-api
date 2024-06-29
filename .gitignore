@@ -24,7 +24,7 @@ tmp/
 
 # .env file
 .env
-
+bin
 # Project build
 main
 *templ.go

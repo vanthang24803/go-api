@@ -1,6 +1,7 @@
 package server
 
 import (
+	"app/pkg/database"
 	"fmt"
 	"net/http"
 	"os"
@@ -8,8 +9,6 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
-
-	"app/internal/database"
 )
 
 type Server struct {
@@ -29,7 +28,7 @@ func NewServer() *http.Server {
 	// Declare Server config
 	server := &http.Server{
 		Addr:         fmt.Sprintf(":%d", NewServer.port),
-		Handler:      NewServer.RegisterRoutes(),
+		Handler:      NewServer.Routes(),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,

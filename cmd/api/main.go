@@ -1,7 +1,7 @@
 package main
 
 import (
-	"app/internal/server"
+	"app/pkg/server"
 	"fmt"
 )
 
