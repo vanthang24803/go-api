@@ -2,8 +2,6 @@ package controllers
 
 import (
 	"app/internal/repositories"
-	"app/pkg/helpers"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,13 +17,7 @@ func NewAuthController(repository repositories.AuthRepository) *AuthController {
 }
 
 func (controller *AuthController) FinAll(c *gin.Context) {
+	result := controller.authRepo.GetAll()
 
-	result, err := controller.authRepo.GetAll()
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	helpers.JSON(c, http.StatusOK, result)
-
+	c.JSON(result.Status, result)
 }

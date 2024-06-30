@@ -1,7 +1,9 @@
 package repositories
 
-import "app/internal/models"
+import (
+	"app/pkg/helpers"
+)
 
 type AuthRepository interface {
-	GetAll() ([]models.User, error)
+	GetAll() helpers.Response
 }

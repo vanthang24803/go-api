@@ -4,6 +4,7 @@ import (
 	"app/internal/controllers"
 	"app/internal/repositories/impl"
 	"app/pkg/database"
+	"app/pkg/middlewares"
 	"net/http"
 
 	"app/internal/router"
@@ -11,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Server) Routes() http.Handler {
+func (s *Server) Application() http.Handler {
 	// TODO: Connect Database
 	Db := database.ConnectDatabase()
 
@@ -19,13 +20,19 @@ func (s *Server) Routes() http.Handler {
 	authRepository := impl.NewAuthRepositoryImpl(Db)
 	authController := controllers.NewAuthController(authRepository)
 
-	// TODO:Router
-	r := gin.Default()
-	v1 := r.Group("/api/v1")
+	// TODO: Main
+	app := gin.Default()
+
+	// TODO: Middlewares
+
+	app.Use(middlewares.Logger())
+
+	// TODO: Router
+	v1 := app.Group("/api/v1")
 	{
 
 		router.AuthRoute(v1, authController)
 	}
 
-	return r
+	return app
 }
