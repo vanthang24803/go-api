@@ -1,19 +1,31 @@
 package server
 
 import (
-	routes "app/internal/controllers"
+	"app/internal/controllers"
+	"app/internal/repositories/impl"
+	"app/pkg/database"
 	"net/http"
+
+	"app/internal/router"
 
 	"github.com/gin-gonic/gin"
 )
 
 func (s *Server) Routes() http.Handler {
-	r := gin.Default()
+	// TODO: Connect Database
+	Db := database.ConnectDatabase()
 
+	// TODO: DI
+	authRepository := impl.NewAuthRepositoryImpl(Db)
+	authController := controllers.NewAuthController(authRepository)
+
+	// TODO:Router
+	r := gin.Default()
 	v1 := r.Group("/api/v1")
 	{
-		routes.ProductController(v1)
-		routes.AuthController(v1)
+
+		router.AuthRoute(v1, authController)
 	}
+
 	return r
 }

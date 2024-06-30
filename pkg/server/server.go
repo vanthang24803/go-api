@@ -1,7 +1,6 @@
 package server
 
 import (
-	"app/pkg/database"
 	"fmt"
 	"net/http"
 	"os"
@@ -17,8 +16,6 @@ type Server struct {
 
 func NewServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
-
-	database.ConnectDatabase()
 
 	NewServer := &Server{
 		port: port,
